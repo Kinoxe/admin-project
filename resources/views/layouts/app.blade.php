@@ -10,11 +10,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Bootstrap core CSS-->
-  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <!-- Custom fonts -->
-  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
   <!-- Custom styles -->
-  <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <div id="app">
@@ -42,12 +42,12 @@
         @endguest
 
         <!-- Bootstrap core JavaScript-->
-        <script src="jquery/jquery.min.js"></script>
-        <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Core plugin JavaScript-->
-        <script src="jquery-easing/jquery.easing.min.js"></script>
+        <script src="{{ asset('jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin.min.js"></script>
+        <script src="{{ asset('js/sb-admin.min.js') }}"></script>
         <!-- Custom scripts for this page-->
         <!-- Toggle between fixed and static navbar-->
         <script>

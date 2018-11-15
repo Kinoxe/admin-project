@@ -10,7 +10,23 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {   $this->truncateTables([ 
+        'Roles',
+        'Permissions',    	
+        'Users',
+        
+    ]);
+        $this->call(PermisosSeeder::class);
+        $this->call(UserSeeder::class);
         // $this->call(UsersTableSeeder::class);
+    }
+    
+    protected function truncateTables(array $tables){
+    	DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+    	foreach($tables as $table){
+    		DB::table($table)->truncate();
+    	}
+
+    	DB::statement('SET FOREIGN_KEY_CHECKS =1;');
     }
 }

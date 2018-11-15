@@ -13,8 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @role('admin')
+                        Tiene rol de admin!
+                    @else
+                        este usuario tiene rol de invitado...
+                    @endrole
 
-                    You are logged in!
+                    @can('edit user')
+                        este puede editar usuarios
+                    @endcan
+                    
                 </div>
             </div>
         </div>
