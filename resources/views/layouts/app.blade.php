@@ -20,8 +20,11 @@
     <div id="app">
         
         @include('shared.navbar')
+        @guest
+        @yield('content')
+        @else
         <div class="content-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid ">
                 @yield('content')
             </div>
             <footer class="sticky-footer">
@@ -36,6 +39,7 @@
                 <i class="fa fa-angle-up"></i>
               </a>
         </div>
+        @endguest
 
         <!-- Bootstrap core JavaScript-->
         <script src="jquery/jquery.min.js"></script>

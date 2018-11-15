@@ -2,8 +2,11 @@
 
  <!-- Navigation-->
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <!--titulo a la derecha-->
     <a class="navbar-brand" href="index.html">ADMIN-PROJECT</a>
     
+    <!--comprueba si esta logueado y dependiendo muestra un nav u otro-->
+    <!--navbar no logueado-->
     @guest
         <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
@@ -18,6 +21,8 @@
                 </ul>
         </div>
     @else
+    <!--navbar logueado-->
+    <!--menu desplegable a la izquierda-->
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
     </button>
@@ -120,6 +125,7 @@
           </a>
         </li>
       </ul>
+      <!--navbar top busqueda, mensajes y logout-->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -218,9 +224,9 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <i class="fa fa-fw fa-sign-out"></i><a class="dropdown-item" href="{{ route('logout') }}"
+                <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
+                                 document.getElementById('logout-form').submit();"><i class="fa fa-fw fa-sign-out"></i>
                     {{ __('Logout') }}
                 </a>
 
