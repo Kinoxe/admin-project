@@ -50,12 +50,14 @@
         <script src="{{ asset('js/sb-admin.min.js') }}"></script>
         <!-- Custom scripts for this page-->
         <!-- Toggle between fixed and static navbar-->
+
         <script>
         $('#toggleNavPosition').click(function() {
           $('body').toggleClass('fixed-nav');
           $('nav').toggleClass('fixed-top static-top');
-        });
-            
+        });</script>
+        @yield('script')  
+        
     </div>
 </body>
 </html>

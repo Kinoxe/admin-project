@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Cliente;
+
 class ClientesController extends Controller
 {   
     public function __construct()
     {
-        $this->middleware('auth');
+       $this->middleware('auth');
+       $this->middleware('permission:show client', ['only' => ['index']]);
+       $this->middleware('permission:create client', ['only' => ['create','store']]);
+       $this->middleware('permission:edit client', ['only' => ['edit','update']]);
+       $this->middleware('permission:delete client', ['only' => ['destroy']]);
+       //$this->authorizeResource(Cliente::class);
     }
     /**
      * Display a listing of the resource.
@@ -40,11 +47,7 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>'required',
-            'telefono'=> 'required|integer',
-            'email' => 'email'
-          ]);
+        
           $cliente = new Cliente([
             'nombre' => $request->get('nombre'),
             'direccion'=> $request->get('direccion'),
@@ -74,7 +77,9 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Cliente::find($id);
+
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -85,8 +90,15 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {        
+          $cliente = Cliente::find($id);
+          $cliente->nombre = $request->get('nombre');
+          $cliente->direccion = $request->get('direccion');
+          $cliente->telefono = $request->get('telefono');
+          $cliente->email = $request->get('email');
+          $cliente->save();
+    
+          return redirect('/clientes')->with('success', 'El cliente fue actualizado correctamente.');
     }
 
     /**
@@ -97,6 +109,9 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+
+        return redirect('/clientes')->with('success', 'El cliente fue eliminado.');
     }
 }
