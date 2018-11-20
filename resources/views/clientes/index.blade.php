@@ -12,6 +12,21 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
+  <h1>Clientes</h1>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="buscar nombre" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+    <div class="collapse navbar-collapse justify-content-center">
+      {!!$clientes->render()!!}
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
+          
+      <a href="{{ route('clientes.create')}}" class="btn btn-success">Crear Cliente</a>
+    </div>
+  </nav>
+  
   <table class="table table-striped">
     <thead>
         <tr>
@@ -20,7 +35,7 @@
           <td>Direccion</td>
           <td>Telefono</td>
           <td>email</td>
-          <td colspan="2">Action</td>
+          <td colspan="2">Acciones</td>
         </tr>
     </thead>
     <tbody>
@@ -51,5 +66,10 @@
         @endforeach
     </tbody>
   </table>
-<div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class=" navbar-collapse my-2 my-lg-0 justify-content-center">
+        {!!$clientes->render()!!}
+      </div>
+    </nav>
+
 @endsection

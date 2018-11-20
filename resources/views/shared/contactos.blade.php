@@ -1,4 +1,3 @@
-  
 <div class="row p-2 col-md-13 bg-dark text-white">
     <div class="col-md-1">#</div>
     <div class="col-md-3">  Nombre Contacto</div>
@@ -11,7 +10,7 @@
    
     </div>  
 </div>   
-<div id="contactos" class=" container-fluid border  col-md-13">
+<div id="contactos" class="row border  col-md-13">
     <!--div id="lo-que-vamos-a-copiar"-->
        
     <div id="lo-que-vamos-a-copiar">
