@@ -11,13 +11,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {   $this->truncateTables([ 
+        //tablas predeterminadas
         'Roles',
         'Permissions',    	
         'Users',
-        
+
+        //tablas de pruebas
+        'Contacto_Clientes',
+        'Clientes',
+              
     ]);
+        //seeder predeterminados
         $this->call(PermisosSeeder::class);
         $this->call(UserSeeder::class);
+
+        //seeder para pruebas
+        $this->call(ClientesTableSeeder::class);
+        $this->call(ContactoClienteSeeder::class);
         // $this->call(UsersTableSeeder::class);
     }
     

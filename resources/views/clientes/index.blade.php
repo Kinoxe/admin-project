@@ -19,7 +19,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
     <div class="collapse navbar-collapse justify-content-center">
-      {!!$clientes->render()!!}
+      {!! $clientes->render() !!}
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
           
@@ -43,9 +43,10 @@
         <tr>
             <td>{{$cliente->id}}</td>
             <td>{{$cliente->nombre}}</td>
-            <td>{{$cliente->direccion}}</td>
-            <td>{{$cliente->telefono}}</td>
-            <td>{{$cliente->email}}</td>
+            <td>{{$cliente->cuit}}</td>
+            <td>{{$cliente->contactos['telefono']}}</td>
+            <td>{{$cliente->contactos['email']}}</td>
+            
             <td>@can('edit client') 
                 <a href="{{ route('clientes.edit',$cliente->id)}}" class="btn btn-primary">Edit</a>
                 @else 
@@ -68,7 +69,7 @@
   </table>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class=" navbar-collapse my-2 my-lg-0 justify-content-center">
-        {!!$clientes->render()!!}
+        {!! $clientes->render() !!}
       </div>
     </nav>
 

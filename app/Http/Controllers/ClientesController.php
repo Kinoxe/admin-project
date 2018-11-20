@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\ContactoCliente;
 
 class ClientesController extends Controller
 {   
@@ -24,8 +25,10 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::paginate();
-
+        $clientes = Cliente::paginate(10); 
+        //$clientes->load('contactos')  ;
+       //dd($clientes->contactos);
+        
         return view('clientes.index', compact('clientes'));
     }
 

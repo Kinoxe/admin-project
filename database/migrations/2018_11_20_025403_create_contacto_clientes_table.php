@@ -12,9 +12,16 @@ class CreateContactoClientesTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
         Schema::create('contacto_clientes', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('id_cliente')->unsigned();
+            $table->foreign('id_cliente')->references('id')->on('clientes');
+
+            $table->string('nombre');
+            $table->string('email');
+            $table->string('telefono');
             $table->timestamps();
         });
     }
