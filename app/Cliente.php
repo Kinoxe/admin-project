@@ -21,4 +21,11 @@ class Cliente extends Model
         return $this->hastMany(ContactoCliente::class,'id_cliente')->first();
  
      }
+
+     public function scopeName($query, $name){
+      
+        if(trim($name) != ""){
+            $query->where("nombre","LIKE", "%$name%");
+        }
+     }
 }

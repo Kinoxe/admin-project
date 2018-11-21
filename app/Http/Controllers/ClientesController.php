@@ -23,9 +23,9 @@ class ClientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $clientes = Cliente::paginate(10); 
+    public function index(Request $request)
+    {  
+        $clientes = Cliente::name($request->get('name'))->orderBy('id','ASC')->paginate(10); 
         //$clientes->load('contactos')  ;
        //dd($clientes->contactos);
         

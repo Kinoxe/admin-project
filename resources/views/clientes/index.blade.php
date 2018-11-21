@@ -15,9 +15,11 @@
   <h1>Clientes</h1>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="buscar nombre" aria-label="Search">
+    {!! Form::open(['route'=>'clientes.index', 'method'=>'GET', 'class'=>'navbar-form navbar-left pull-left', 'role'=>'search']) !!}
+      {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Nombre del Cliente']) !!}
+      
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-    </form>
+    {!! Form::close() !!}
     <div class="collapse navbar-collapse justify-content-center">
       {!! $clientes->render() !!}
     </div>
