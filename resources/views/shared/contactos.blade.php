@@ -1,35 +1,29 @@
-<div class="row p-2 col-md-13 bg-dark text-white">
-    <div class="col-md-1">#</div>
+<div class="row p-2 bg-dark text-white">
     <div class="col-md-3">  Nombre Contacto</div>
     <div class="col-md-3">  Telefono</div>
     <div class="col-md-3">  E-mail</div>
     <div class="col-md-2">  
-        <div class="well">
-            <button id="btn-contacto-agregar" class="btn btn-primary" type="button">Agregar Contacto</button>                
+        <div class="well btn-block">
+            <button id="btn-contacto-agregar" class="btn btn-primary " type="button">Agregar Contacto</button>                
         </div>
    
     </div>  
 </div>   
-<div id="contactos" class="row border  col-md-13">
-    <!--div id="lo-que-vamos-a-copiar"-->
-       
+<div id="contactos"  class="p-2  border">
+    <!--se copiara lo  siguiente presionando el boton agregar-->
+        
     <div id="lo-que-vamos-a-copiar">
-        <div class=" row p-2 border-bottom">
-            <!--div class="well well-sm"-->
-            
-                <div class="form-group col-md-1">
-                        <label></label>
-                    </div>
+        <div class=" row ">            
                 <div class="form-group col-md-3">
-                    <input type="text" name="Nombre[]" class="form-control" placeholder="Ingrese su nombre" data-validacion-tipo="requerido|min:3" />
+                    <input type="text" name="contacto-nombre[]" class="form-control" placeholder="Ingrese nombre"  />
                 </div>
     
                 <div class="form-group col-md-3">
-                    <input type="text" name="telefono[]" class="form-control" placeholder="Ingrese su telefono" data-validacion-tipo="requerido|min:10" />
+                    <input type="text" name="contacto-telefono[]" class="form-control" placeholder="Ingrese telefono" />
                 </div>
     
                 <div class="form-group col-md-3">
-                    <input type="text" name="Correo[]" class="form-control" placeholder="Ingrese su correo electrónico" data-validacion-tipo="requerido|email" />
+                    <input type="text" name="contacto-email[]" class="form-control" placeholder="Ingrese correo electrónico"  />
                 </div>
                <div class="well well-sm col-md-2"></div>
          

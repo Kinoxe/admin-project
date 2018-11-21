@@ -29,15 +29,15 @@
     </div>
   </nav>
   
-  <table class="table table-striped">
-    <thead>
+  <table class="table table-striped table-sm">
+    <thead class="bg-dark text-white">
         <tr>
           <td>ID</td>
           <td>Nombre</td>
-          <td>Direccion</td>
+          <td>Cuit</td>
           <td>Telefono</td>
           <td>email</td>
-          <td colspan="2">Acciones</td>
+          <td>Acciones</td>
         </tr>
     </thead>
     <tbody>
@@ -49,21 +49,32 @@
             <td>{{$cliente->contactos['telefono']}}</td>
             <td>{{$cliente->contactos['email']}}</td>
             
-            <td>@can('edit client') 
-                <a href="{{ route('clientes.edit',$cliente->id)}}" class="btn btn-primary">Edit</a>
+         
+              <td class="row">
+                @can('show client') 
+                  <a href="{{ route('clientes.show',$cliente->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
                 @else 
-                no puede editar
+                  <a href="{{ route('clientes.show',$cliente->id)}}" class="btn btn-primary btn-sm disabled" aria-disabled="true"></a>
+                
                 @endcan
-              </td>
-            <td>@can('delete client')
-                <form action="{{ route('clientes.destroy', $cliente->id)}}" method="post">
+              
+              @can('edit client') 
+                  <a href="{{ route('clientes.edit',$cliente->id)}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  @else 
+                  <a href="{{ route('clientes.edit',$cliente->id)}}" class="btn btn-primary  btn-sm disabled" aria-disabled="true"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  @endcan
+              
+               <form action="{{ route('clientes.destroy', $cliente->id)}}" method="post">
+                @can('delete client')
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
+                  <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-o fa-lg"></i></button>
+                
                 @else 
-                no puede eliminar
+                  <button class="btn btn-danger btn-sm" type="submit" disabled><i class="fa fa-trash-o fa-lg"></i></button>
                 @endcan
+              </form>
+
             </td>
         </tr>
         @endforeach

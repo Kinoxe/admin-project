@@ -24,42 +24,66 @@
         <div class="row ">
           <div class="form-group col-md-4">
               @csrf
-              <label for="nombre">Nombre:</label>
+              <label for="nombre">Nombre :</label>
               <input type="text" class="form-control" name="nombre"/>
           </div>
           <div class="form-group col-md-4">
-            <label for="direccion">CUIT :</label>
-            <input type="text" class="form-control" name="direccion"/>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="email">DIRECCION :</label>
-            <input type="text" class="form-control" name="email"/>
+            <label for="cuit">CUIT :</label>
+            <input type="text" class="form-control" name="cuit"/>
         </div>
       </div>
       <div class='row'>
           <div class="form-group col-md-4">
-              <label for="telefono">DIRECCION :</label>
-              <input type="text" class="form-control" name="CUIT"/>
+              <label for="direccion">Direccion :</label>
+              <input type="text" class="form-control" name="direccion"/>
           </div>
           <div class="form-group col-md-4">
-              <label for="email">LOCALIDAD :</label>
-              <input type="text" class="form-control" name="email"/>
+              <label for="localidad">Localidad :</label>
+              <input type="text" class="form-control" name="localidad"/>
           </div>
           <div class="form-group col-md-4">
-              <label for="email">PROVINCIA :</label>
-              <input type="text" class="form-control" name="email"/>
+              <label for="provincia">Provincia :</label>
+              <!--input type="text" class="form-control" name="email"/-->
+              <select class="custom-select" name="provincia" id="inputGroupSelect01">
+                <option value="Buenos Aires">Bs. As.</option>
+                <option value="Catamarca">Catamarca</option>
+                <option value="Chaco">Chaco</option>
+                <option value="Chubut">Chubut</option>
+                <option value="Cordoba">Cordoba</option>
+                <option value="Corrientes">Corrientes</option>
+                <option value="Entre Rios">Entre Rios</option>
+                <option value="Formosa">Formosa</option>
+                <option value="Jujuy">Jujuy</option>
+                <option value="La Pampa" selected="selected">La Pampa</option>
+                <option value="La Rioja">La Rioja</option>
+                <option value="Mendoza">Mendoza</option>
+                <option value="Misiones">Misiones</option>
+                <option value="Neuquen">Neuquen</option>
+                <option value="Rio Negro">Rio Negro</option>
+                <option value="Salta">Salta</option>
+                <option value="San Juan">San Juan</option>
+                <option value="San Luis">San Luis</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+                <option value="Santa Fe">Santa Fe</option>
+                <option value="Sgo. del Estero">Sgo. del Estero</option>
+                <option value="Tierra del Fuego">Tierra del Fuego</option>
+                <option value="Tucuman">Tucuman</option>
+              </select>
           </div>
         </div>
         
           <!-- Incluimos la plantilla de los contactos-->
-          <div>
+          <div style="{margin-top: 4px; margin-bottom: 2px;}">
             <label for="contactos">Contactos:</label>
             @include('shared.contactos')
           </div>
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center row ">
-              <a href="{{ route('clientes.index')}}" class="btn btn-warning">Cancelar</a>
-            <button type="submit" class="btn btn-success">Guardar</button>
-          </nav>
+          
+            <div class=" p-2">
+              <a href="{{ route('clientes.index')}}" class="btn btn-warning" role="button">Cancelar</a>
+          
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+          </div>
       </form>
   </div>
 </div>

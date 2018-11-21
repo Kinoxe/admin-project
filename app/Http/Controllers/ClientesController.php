@@ -49,15 +49,29 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        
         
           $cliente = new Cliente([
             'nombre' => $request->get('nombre'),
+            'cuit' => $request->get('cuit'),
             'direccion'=> $request->get('direccion'),
-            'telefono'=> $request->get('telefono'),
-            'email'=> $request->get('email')
+            'localidad'=> $request->get('localidad'),
+            'provincia'=> $request->get('provincia')
           ]);
+          
           $cliente->save();
+          //guardamos contactos
+          for ($i=count($request->get('contacto-nombre'))-1; $i >= 0; $i--) { 
+              $contacto = new ContactoCliente([
+                  'id_cliente'=> $cliente->id,
+                  'nombre'=>($request->get('contacto-nombre'))[$i],
+                  'telefono'=>($request->get('contacto-telefono'))[$i],
+                  'email'=>($request->get('contacto-email'))[$i],
+              ]);
+               // dd($contacto);
+              $contacto->save();
+          };
           return redirect('/clientes')->with('success', 'El cliente se agrego correctamente');
     }
 
