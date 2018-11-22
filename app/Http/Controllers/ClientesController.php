@@ -143,9 +143,9 @@ class ClientesController extends Controller
           //$cliente->save();
         
           $contactos = Cliente::find($id)->contactos;
-           // dd($contactos[0]->id);
+          
           for ($i=count($request->get('contacto-nombre'))-1; $i >= 0; $i--) { 
-            $cambia=0;
+            $cambia=-1;
             $id_contc = ($request->get('contacto-id'))[$i];
             if($id_contc != '#'){
                 
@@ -153,12 +153,13 @@ class ClientesController extends Controller
                 $contacto->nombre = trim(($request->get('contacto-nombre'))[$i]);
                 $contacto->telefono = trim(($request->get('contacto-telefono'))[$i]);
                 $contacto->email = trim(($request->get('contacto-email'))[$i]);
-                for ($j=count($contactos)-1; $j >= 0 && $cambia == 0; $j--){
-                    if($contactos[$j]->id == $id_contc){
-                        unset($contactos[$j]);
-                        $cambia=1;  
+              
+                foreach($contactos as $key => $conta){
+                    if($conta->id == $id_contc){
+                        $cambia=$key;
                     }
                 }
+                if($cambia!= -1){unset($contactos[$cambia]);}
             }else{
                 $contacto = new ContactoCliente([
                     'id_cliente'=> $cliente->id,

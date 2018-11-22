@@ -8,7 +8,7 @@
 </style>
 <div class="card uper">
   <div class="card-header">
-    Editar Cliente
+    <h1>Editar: <b>{{$cliente->nombre}}</b></h1>
   </div>
   <div class="card-body">
     @if ($errors->any())
@@ -27,27 +27,27 @@
           <div class="form-group col-md-4">
              
               <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" name="nombre"  value={{ $cliente->nombre }} required/>
+              <input type="text" class="form-control" name="nombre"  value='{{ $cliente->nombre }}' required/>
           </div>
           <div class="form-group col-md-4">
             <label for="cuit">CUIT :</label>
-            <input type="text" class="form-control"  value={{ $cliente->cuit }} name="cuit"/>
+            <input type="text" class="form-control"  value='{{ $cliente->cuit }}' name="cuit"/>
         </div>
       </div>
       <div class='row'>
           <div class="form-group col-md-4">
               <label for="direccion">Direccion :</label>
-              <input type="text" class="form-control"  value={{ $cliente->direccion }} name="direccion"/>
+              <input type="text" class="form-control"  value='{{ $cliente->direccion }}' name="direccion"/>
           </div>
           <div class="form-group col-md-4">
               <label for="localidad">Localidad :</label>
-              <input type="text" class="form-control" name="localidad" value={{ $cliente->localidad }} placeholder="Ingrese localidad" />
+              <input type="text" class="form-control" name="localidad" value='{{ $cliente->localidad }}'' placeholder="Ingrese localidad" />
           </div>
           <div class="form-group col-md-4">
               <label for="provincia">Provincia :</label>
               <!--input type="text" class="form-control" name="email"/-->
               <select class="custom-select" name="provincia" id="inputGroupSelect01">
-                <option value={{ $cliente->provincia }} selected="selected">{{ $cliente->provincia }}</option>
+                <option value='{{ $cliente->provincia }}' selected="selected">{{ $cliente->provincia }}</option>
                 <option value="Buenos Aires">Bs. As.</option>
                 <option value="Catamarca">Catamarca</option>
                 <option value="Chaco">Chaco</option>
