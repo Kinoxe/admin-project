@@ -41,7 +41,7 @@
                 @can('delete client')
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger btn-lg btn-block mt-2" type="submit"><i class="fa fa-trash-o fa-lg"> </i> Eliminar</button>
+                <button class="btn btn-danger btn-lg btn-block mt-2" type="submit" onclick="return confirm('¿Seguro quieres eliminar a {{$cliente->nombre}}?')"><i class="fa fa-trash-o fa-lg"> </i> Eliminar</button>
           
              @else 
                 <button class="btn btn-danger btn-lg btn-block mt-2" type="submit" disabled><i class="fa fa-trash-o fa-lg"> </i> Eliminar</button>

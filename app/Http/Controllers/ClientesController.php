@@ -140,7 +140,7 @@ class ClientesController extends Controller
           $cliente->localidad = trim($request->get('localidad'));
           $cliente->cuit = trim($request->get('cuit'));
           $cliente->provincia = trim($request->get('provincia'));
-          //$cliente->save();
+          $cliente->save();
         
           $contactos = Cliente::find($id)->contactos;
           
@@ -196,10 +196,22 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   try{
+    
+        $contactos = Cliente::find($id)->contactos;
+        foreach($contactos as $contacto){
+            $contacto->delete();
+        }
         $cliente = Cliente::find($id);
         $cliente->delete();
 
         return redirect('/clientes')->with('success', 'El cliente fue eliminado.');
+        }catch(\Exception $e) {
+            // do task when error
+            //echo $e->getMessage();   // insert query
+           return redirect('/clientes')->with('error', 'El cliente no pudo ser eliminado: ('. $e->getMessage().')');
+                
+            
+        }
     }
 }

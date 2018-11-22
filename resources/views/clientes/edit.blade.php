@@ -84,7 +84,7 @@
             <div class=" p-2">
               <a href="{{ route('clientes.index')}}" class="btn btn-warning mr-2" role="button">Cancelar</a>
           
-              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="submit" class="btn btn-success" onclick="return confirm('¿Confirma edicion de {{$cliente->nombre}}?')">Guardar</button>
             </div>
           </div>
       </form>

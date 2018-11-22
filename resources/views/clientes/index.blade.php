@@ -12,6 +12,11 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
+  @if(session()->get('error'))
+    <div class="alert alert-warning">
+      {{ session()->get('error') }}  
+    </div><br />
+  @endif
   <h1>Clientes</h1>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <form class="form-inline my-2 my-lg-0">
@@ -69,7 +74,7 @@
                 @can('delete client')
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-o fa-lg ml-1 "></i></button>
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('¿Seguro quieres eliminar a {{$cliente->nombre}}?')"><i class="fa fa-trash-o fa-lg ml-1 "></i></button>
                 
                 @else 
                   <button class="btn btn-danger btn-sm" type="submit" disabled><i class="fa fa-trash-o fa-lg ml-1"></i></button>
