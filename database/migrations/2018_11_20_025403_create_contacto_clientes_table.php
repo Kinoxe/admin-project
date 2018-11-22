@@ -19,9 +19,9 @@ class CreateContactoClientesTable extends Migration
             $table->integer('id_cliente')->unsigned();
             $table->foreign('id_cliente')->references('id')->on('clientes');
 
-            $table->string('nombre');
-            $table->string('email');
-            $table->string('telefono');
+            $table->string('nombre')->nullable();
+            $table->string('email')->nullable();
+            $table->string('telefono')->nullable();
             $table->timestamps();
         });
     }

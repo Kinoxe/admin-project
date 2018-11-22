@@ -20,26 +20,26 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="{{ route('clientes.store') }}">
+      <form method="post" id="cliente-form" name="cliente-form" action="{{ route('clientes.store') }}">
         <div class="row ">
           <div class="form-group col-md-4">
               @csrf
-              <label for="nombre">Nombre :</label>
-              <input type="text" class="form-control" name="nombre"/>
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" name="nombre" placeholder="Ingrese nombre"  required/>
           </div>
           <div class="form-group col-md-4">
             <label for="cuit">CUIT :</label>
-            <input type="text" class="form-control" name="cuit"/>
+            <input type="text" class="form-control" placeholder="Ingrese cuit"  name="cuit"/>
         </div>
       </div>
       <div class='row'>
           <div class="form-group col-md-4">
               <label for="direccion">Direccion :</label>
-              <input type="text" class="form-control" name="direccion"/>
+              <input type="text" class="form-control" placeholder="Ingrese direccion"  name="direccion"/>
           </div>
           <div class="form-group col-md-4">
               <label for="localidad">Localidad :</label>
-              <input type="text" class="form-control" name="localidad"/>
+              <input type="text" class="form-control" name="localidad" placeholder="Ingrese localidad" />
           </div>
           <div class="form-group col-md-4">
               <label for="provincia">Provincia :</label>
@@ -79,7 +79,7 @@
           </div>
           
             <div class=" p-2">
-              <a href="{{ route('clientes.index')}}" class="btn btn-warning" role="button">Cancelar</a>
+              <a href="{{ route('clientes.index')}}" class="btn btn-warning mr-2" role="button">Cancelar</a>
           
               <button type="submit" class="btn btn-success">Guardar</button>
             </div>
@@ -88,4 +88,14 @@
   </div>
 </div>
 
+@endsection
+@section('script')  
+
+<script>
+   $(document).ready(function(){
+$("#cliente-form").submit(function(){
+  return $(this).validate();
+});
+})
+</script>
 @endsection

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cliente;
 use App\ContactoCliente;
+use \App\Http\Requests\ClienteRequest;
 
 class ClientesController extends Controller
 {   
@@ -51,28 +52,43 @@ class ClientesController extends Controller
     public function store(Request $request)
     {   
         
-        
+        try{
+            
+            
           $cliente = new Cliente([
-            'nombre' => $request->get('nombre'),
-            'cuit' => $request->get('cuit'),
-            'direccion'=> $request->get('direccion'),
-            'localidad'=> $request->get('localidad'),
-            'provincia'=> $request->get('provincia')
+            'nombre' => trim($request->get('nombre')),
+            'cuit' => trim($request->get('cuit')),
+            'direccion'=> trim($request->get('direccion')),
+            'localidad'=> trim($request->get('localidad')),
+            'provincia'=> trim($request->get('provincia'))
           ]);
-          
+        
           $cliente->save();
           //guardamos contactos
           for ($i=count($request->get('contacto-nombre'))-1; $i >= 0; $i--) { 
-              $contacto = new ContactoCliente([
+              
+                $contacto = new ContactoCliente([
                   'id_cliente'=> $cliente->id,
-                  'nombre'=>($request->get('contacto-nombre'))[$i],
-                  'telefono'=>($request->get('contacto-telefono'))[$i],
-                  'email'=>($request->get('contacto-email'))[$i],
+                  'nombre'=>trim(($request->get('contacto-nombre'))[$i]),
+                  'telefono'=>trim(($request->get('contacto-telefono'))[$i]),
+                  'email'=>trim(($request->get('contacto-email'))[$i]),
               ]);
                // dd($contacto);
               $contacto->save();
+            
+               
           };
-          return redirect('/clientes')->with('success', 'El cliente se agrego correctamente');
+         
+        return redirect('/clientes')->with('success', 'El cliente se agrego correctamente.');
+    }catch(\Exception $e) {
+        // do task when error
+        echo $e->getMessage();   // insert query
+           // return redirect('/clientes/create')->with('error', 'El cliente se agrego correctamente.'.$e.'', 500);
+            
+        
+    }
+        
+          
     }
 
     /**
@@ -82,8 +98,12 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        $cliente = Cliente::where('id','=',$id)->get()->first(); 
+        
+        $contactos = Cliente::find($id)->contactos;
+        //dd($contactos);
+        return view('clientes.show', compact('cliente','contactos'));
     }
 
     /**
@@ -94,9 +114,13 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        $cliente = Cliente::find($id);
+        $cliente = Cliente::where('id','=',$id)->get()->first(); 
+        
+        $contactos = Cliente::find($id)->contactos;
+        //dd($contactos);
+        return view('clientes.edit', compact('cliente','contactos'));
 
-        return view('clientes.edit', compact('cliente'));
+        
     }
 
     /**
@@ -107,16 +131,62 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {        
+    {     //dd($request);
+        try{
+        
           $cliente = Cliente::find($id);
-          $cliente->nombre = $request->get('nombre');
-          $cliente->direccion = $request->get('direccion');
-          $cliente->telefono = $request->get('telefono');
-          $cliente->email = $request->get('email');
-          $cliente->save();
-    
-          return redirect('/clientes')->with('success', 'El cliente fue actualizado correctamente.');
+          $cliente->nombre = trim($request->get('nombre'));
+          $cliente->direccion = trim($request->get('direccion'));
+          $cliente->localidad = trim($request->get('localidad'));
+          $cliente->cuit = trim($request->get('cuit'));
+          $cliente->provincia = trim($request->get('provincia'));
+          //$cliente->save();
+        
+          $contactos = Cliente::find($id)->contactos;
+           // dd($contactos[0]->id);
+          for ($i=count($request->get('contacto-nombre'))-1; $i >= 0; $i--) { 
+            $cambia=0;
+            $id_contc = ($request->get('contacto-id'))[$i];
+            if($id_contc != '#'){
+                
+                $contacto = ContactoCliente::find($id_contc);
+                $contacto->nombre = trim(($request->get('contacto-nombre'))[$i]);
+                $contacto->telefono = trim(($request->get('contacto-telefono'))[$i]);
+                $contacto->email = trim(($request->get('contacto-email'))[$i]);
+                for ($j=count($contactos)-1; $j >= 0 && $cambia == 0; $j--){
+                    if($contactos[$j]->id == $id_contc){
+                        unset($contactos[$j]);
+                        $cambia=1;  
+                    }
+                }
+            }else{
+                $contacto = new ContactoCliente([
+                    'id_cliente'=> $cliente->id,
+                    'nombre'=>($request->get('contacto-nombre'))[$i],
+                    'telefono'=>($request->get('contacto-telefono'))[$i],
+                    'email'=>($request->get('contacto-email'))[$i],
+                ]);
+            }
+           // dd($contacto);
+          $contacto->save();
+        
+      };
+        foreach ($contactos as $contacto) {
+            $contac = ContactoCliente::find($contacto->id);
+            $contac->delete();
+        }
+
+        return redirect('/clientes')->with('success', 'El cliente fue actualizado correctamente.');
+
+        }catch(\Exception $e) {
+                // do task when error
+                echo $e->getMessage();   // insert query
+                   // return redirect('/clientes/create')->with('error', 'El cliente se agrego correctamente.'.$e.'', 500);
+                    
+                
+            }
     }
+    
 
     /**
      * Remove the specified resource from storage.

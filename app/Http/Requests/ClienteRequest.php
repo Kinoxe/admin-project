@@ -27,8 +27,9 @@ class ClienteRequest extends FormRequest
             
             'direccion' => '',
             'nombre'=>'required',
-            'telefono'=> 'required|integer',
-            'email' => 'email'
+            'cuit'=> 'integer',
+            'localidad' => ''
+            
         ];
     }
 }

@@ -11,14 +11,14 @@ class Cliente extends Model
         'nombre', 'cuit', 'localidad','direccion','provincia'
     ];
 
-    public function contactos(){
+    public function contacto(){
  
        return $this->hasOne(ContactoCliente::class, 'id_cliente');
 
     }
 
-    public function contacto(){
-        return $this->hastMany(ContactoCliente::class,'id_cliente')->first();
+    public function contactos(){
+        return $this->hasMany(ContactoCliente::class,'id_cliente');
  
      }
 

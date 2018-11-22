@@ -15,15 +15,15 @@
     <div id="lo-que-vamos-a-copiar">
         <div class=" row ">            
                 <div class="form-group col-md-3">
-                    <input type="text" name="contacto-nombre[]" class="form-control" placeholder="Ingrese nombre"  />
+                    <input type="text" name="contacto-nombre[]" class="form-control" placeholder="Ingrese nombre"  required/>
                 </div>
     
                 <div class="form-group col-md-3">
-                    <input type="text" name="contacto-telefono[]" class="form-control" placeholder="Ingrese telefono" />
+                    <input type="text" name="contacto-telefono[]" class="form-control" value="" placeholder="Ingrese telefono" />
                 </div>
     
                 <div class="form-group col-md-3">
-                    <input type="text" name="contacto-email[]" class="form-control" placeholder="Ingrese correo electrónico"  />
+                    <input type="text" name="contacto-email[]" class="form-control" value="" placeholder="Ingrese correo electrónico"  />
                 </div>
                <div class="well well-sm col-md-2"></div>
          
@@ -58,9 +58,6 @@
             $(this).closest('.row').remove();
         })
                 
-        $("#frm-contacto").submit(function(){
-            return $(this).validate();
-        });
         })
     </script>
 @endSection
