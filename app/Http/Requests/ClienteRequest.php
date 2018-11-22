@@ -13,7 +13,7 @@ class ClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class ClienteRequest extends FormRequest
             
             'direccion' => '',
             'nombre'=>'required',
-            'cuit'=> 'integer',
+            'cuit'=> 'numeric',
             'localidad' => ''
             
         ];
