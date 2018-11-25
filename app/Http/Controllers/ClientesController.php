@@ -78,7 +78,7 @@ class ClientesController extends Controller
             
                
           };
-         
+          \Illuminate\Notifications\Notification::send($users, new \App\Notifications\CreacionCliente('envia'));
         return redirect('/clientes')->with('success', 'El cliente se agrego correctamente.');
     }catch(\Exception $e) {
         // do task when error

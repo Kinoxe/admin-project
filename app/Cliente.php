@@ -3,6 +3,7 @@
 namespace App;
 use App\ContactoCliente;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
