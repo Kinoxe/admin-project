@@ -10,15 +10,17 @@ use Illuminate\Notifications\Messages\MailMessage;
 class CreacionCliente extends Notification
 {
     use Queueable;
-
+//defino variable local para recibir en la llamada a la notificacion
+    private $cliente;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+//PISO LA VARIABLE LOCAL EN EL CONSTRUCTOR
+    public function __construct(\App\Cliente $cliente)
     {
-        //
+        $this->cliente = $cliente;
     }
 
     /**
@@ -28,8 +30,8 @@ class CreacionCliente extends Notification
      * @return array
      */
     public function via($notifiable)
-    {
-        return ['toArray'];
+    {   //SELECCIONO QUE ENVIE NOTIFICACIONES VIA BASEDE DATOS
+        return ['database'];
     }
 
     /**
@@ -37,13 +39,15 @@ class CreacionCliente extends Notification
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+     */   
+
+     //CREO EL METODO BASE DE DATOS PARA GUARDAR LAS NOTIFICACIONS
+    public function toDatabase()
+    {  
+        return [    'id' => $this->cliente->id,
+                    'nombre' => $this->cliente->nombre,
+                    'data' => $this->cliente->create_at
+            ];
     }
 
     /**

@@ -29,7 +29,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="cuit">CUIT :</label>
-            <input type="text" class="form-control" placeholder="Ingrese cuit"  name="cuit"/>
+            <input type="number" class="form-control" placeholder="Ingrese cuit"  name="cuit" />
         </div>
       </div>
       <div class='row'>

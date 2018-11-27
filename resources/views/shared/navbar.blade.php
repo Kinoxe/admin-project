@@ -43,7 +43,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="tables.html">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Tables</span>
+            <span class="nav-link-text" id="counter"> 0 </span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -170,16 +170,30 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">Alerts
-              <span class="badge badge-pill badge-warning">6 New</span>
-            </span>
-            <span class="indicator text-warning d-none d-lg-block">
-              <i class="fa fa-fw fa-circle"></i>
-            </span>
+            
+            @if(count(auth()->user()->notifications) > 0)
+               <span class="d-lg-none">Alerts
+                 <span class="badge badge-pill badge-warning"></span>
+                  </span>
+                <span class="indicator text-warning d-none d-lg-block" id="notificacion">
+                {{--count(auth()->user()->notifications)--}}
+                {{count(auth()->user()->notifications)}}
+                </span>
+            @endif
           </a>
           <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">New Alerts:</h6>
+            <h6 class="dropdown-header">Nuevas notificaciones:</h6>
             <div class="dropdown-divider"></div>
+            @foreach (auth()->user()->notifications as $notificacion)
+                <a class="dropdown-item" href="#">
+                  <span class="text-success">
+                    <strong>
+                      <i class="fa fa-long-arrow-up fa-fw"></i>{{$notificacion['data']['nombre']}}</strong>
+                  </span>
+                  <span class="small float-right text-muted">{{$notificacion->created_at}}</span>
+                  
+                </a>
+            @endforeach
             <a class="dropdown-item" href="#">
               <span class="text-success">
                 <strong>
@@ -250,3 +264,35 @@
     </div>
     @endguest
   </nav>
+
+  
+  <!-- script para actualizar valor de las notificaciones -->
+  @section('script')  
+  @guest
+  @else
+  <script type="text/javascript">
+    $(document).ready(function() {	
+        function update(){
+          //var actual = Number($('#notificacion').text())+1; 
+          //$('#notificacion').text(actual); 
+          //var cantidad = Number({{route('notify')}});
+          //$('#counter').text(cantidad);
+
+          //if(actual != Number(cantidad)){
+            //$('#notificacion').text({{count(auth()->user()->notifications)}}); 
+          //}
+          $.ajax({
+            type: "GET",
+            
+            //data: $('#counter').text(),
+            url: "/notify",
+            success: function(data) {
+                $('#notificacion').text(data);
+            }
+        });                                      
+        }
+        setInterval(update, 10000);
+    });
+    </script>
+  @endguest
+  @endsection

@@ -17,5 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/notify', function () {
+    return count(Auth::user()->notifications);
+})->name('notify');
+
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::resource('clientes','ClientesController');

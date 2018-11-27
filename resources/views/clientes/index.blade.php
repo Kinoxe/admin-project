@@ -29,8 +29,11 @@
       {!! $clientes->render() !!}
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
-          
+      @can('create client') 
       <a href="{{ route('clientes.create')}}" class="btn btn-success">Crear Cliente</a>
+      @else
+      <a href="{{ route('clientes.create')}}" class="btn btn-success disabled" aria-disabled="true" >Crear Cliente</a>
+      @endcan
     </div>
   </nav>
   

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Cliente;
 use App\ContactoCliente;
 use \App\Http\Requests\ClienteRequest;
+use App\User;
 
 class ClientesController extends Controller
 {   
@@ -64,6 +65,7 @@ class ClientesController extends Controller
           ]);
         
           $cliente->save();
+          
           //guardamos contactos
           for ($i=count($request->get('contacto-nombre'))-1; $i >= 0; $i--) { 
               
@@ -78,12 +80,22 @@ class ClientesController extends Controller
             
                
           };
-          \Illuminate\Notifications\Notification::send($users, new \App\Notifications\CreacionCliente('envia'));
-        return redirect('/clientes')->with('success', 'El cliente se agrego correctamente.');
+          
+          $users = User::all();
+          foreach($users as $user){
+            
+              if($user->hasPermissionTo('show client') && $user->id != auth()->user()->id){
+                  
+                  $user->notify(new \App\Notifications\CreacionCliente($cliente));
+                  
+              }
+          }
+          //\Illuminate\Notifications\Notification::send($users, new \App\Notifications\CreacionCliente('envia'));
+        return redirect('/clientes')->with('success', 'El cliente fue agregado correctamente.');
     }catch(\Exception $e) {
         // do task when error
-        echo $e->getMessage();   // insert query
-           // return redirect('/clientes/create')->with('error', 'El cliente se agrego correctamente.'.$e.'', 500);
+        //echo $e->getMessage();   // insert query
+         return redirect('/clientes/create')->with('error', 'Error al agregar cliente: '.$e->getMessage().'', 500);
             
         
     }

@@ -56,7 +56,15 @@ class PermisosSeeder extends Seeder
         $admin->givePermissionTo(Permission::create(['name' => 'delete resultado']));
         $admin->givePermissionTo(Permission::create(['name' => 'show resultado']));
 
-        
+        $guest->givePermissionTo('show resultado');
+        $guest->givePermissionTo('show solicitud');
+        $guest->givePermissionTo ('show muestra');
+        $guest->givePermissionTo('show insumo');
+        $guest->givePermissionTo('show user');
+        $guest->givePermissionTo('show client');
+        $guest->givePermissionTo('show provider');
+        $guest->givePermissionTo('show muestra');
+
         
     }
 }
