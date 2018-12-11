@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class CreacionCliente extends Notification
+class EliminacionCliente extends Notification
 {
     use Queueable;
 //defino variable local para recibir en la llamada a la notificacion
@@ -45,12 +45,12 @@ class CreacionCliente extends Notification
     public function toDatabase()
     {  
         return [    'id' => $this->cliente->id,
-                    'nombre' => 'Cliente nuevo',
-                    'mensaje'=> ''.$this->cliente->nombre.' ha sido creado.',
-                    'url'=> "/clientes/".$this->cliente->id,
+                    'nombre' => 'Cliente Eliminado',
+                    'mensaje'=> ''.$this->cliente->nombre.' ha sido eliminado.',
+                    'url'=> "/clientes/",
                     'data' => $this->cliente->create_at,
-                    'icon'=> 'fa fa-plus',
-                    'color'=> 'text-success',
+                    'icon' => 'fa fa-times',
+                    'color'=> 'text-danger',
                     'creador'=> auth()->user()->name
             ];
     }

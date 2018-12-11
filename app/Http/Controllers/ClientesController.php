@@ -80,7 +80,7 @@ class ClientesController extends Controller
             
                
           };
-          
+          //creamos notificaciones de la creacion
           $users = User::all();
           foreach($users as $user){
             
@@ -189,6 +189,16 @@ class ClientesController extends Controller
             $contac->delete();
         }
 
+        $users = User::all();
+        foreach($users as $user){
+          
+            if($user->hasPermissionTo('show client') && $user->id != auth()->user()->id){
+                
+                $user->notify(new \App\Notifications\EdicionCliente($cliente));
+                
+            }
+        }
+
         return redirect('/clientes')->with('success', 'El cliente fue actualizado correctamente.');
 
         }catch(\Exception $e) {
@@ -216,6 +226,16 @@ class ClientesController extends Controller
         }
         $cliente = Cliente::find($id);
         $cliente->delete();
+
+        $users = User::all();
+        foreach($users as $user){
+          
+            if($user->hasPermissionTo('show client') && $user->id != auth()->user()->id){
+                
+                $user->notify(new \App\Notifications\EliminacionCliente($cliente));
+                
+            }
+        }
 
         return redirect('/clientes')->with('success', 'El cliente fue eliminado.');
         }catch(\Exception $e) {

@@ -56,6 +56,24 @@ class PermisosSeeder extends Seeder
         $admin->givePermissionTo(Permission::create(['name' => 'delete resultado']));
         $admin->givePermissionTo(Permission::create(['name' => 'show resultado']));
 
+        $admin->givePermissionTo(Permission::create(['name' => 'create orden']));
+        $admin->givePermissionTo(Permission::create(['name' => 'edit orden']));
+        $admin->givePermissionTo(Permission::create(['name' => 'delete orden']));
+        $admin->givePermissionTo(Permission::create(['name' => 'show orden']));
+
+        $admin->givePermissionTo(Permission::create(['name' => 'create informe']));
+        $admin->givePermissionTo(Permission::create(['name' => 'edit informe']));
+        $admin->givePermissionTo(Permission::create(['name' => 'delete informe']));
+        $admin->givePermissionTo(Permission::create(['name' => 'show informe']));
+
+        $admin->givePermissionTo(Permission::create(['name' => 'create departamento']));
+        $admin->givePermissionTo(Permission::create(['name' => 'edit departamento']));
+        $admin->givePermissionTo(Permission::create(['name' => 'delete departamento']));
+        $admin->givePermissionTo(Permission::create(['name' => 'show departamento']));
+
+        $guest->givePermissionTo('show departamento');
+        $guest->givePermissionTo('show informe');
+        $guest->givePermissionTo('show orden');
         $guest->givePermissionTo('show resultado');
         $guest->givePermissionTo('show solicitud');
         $guest->givePermissionTo ('show muestra');

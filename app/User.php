@@ -30,4 +30,12 @@ class User extends Authenticatable
     ];
 
     protected $guard_name ='web';
+
+    
+    public function scopeName($query, $name){
+      
+        if(trim($name) != ""){
+            $query->where("name","LIKE", "%$name%");
+        }
+     }
 }

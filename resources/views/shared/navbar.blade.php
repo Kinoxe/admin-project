@@ -86,17 +86,18 @@
             </li>
           </ul>
         </li>
+        @hasallroles('admin')
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">Menu Levels</span>
+            <span class="nav-link-text">Administrar</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="{{ route('usuarios.index') }}">Usuarios</a>
             </li>
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="{{ route('departamentos.index') }}">Departamentos</a>
             </li>
             <li>
               <a href="#">Second Level Item</a>
@@ -117,6 +118,7 @@
             </li>
           </ul>
         </li>
+        @endhasallroles
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-link"></i>
@@ -185,16 +187,16 @@
             <h6 class="dropdown-header">Nuevas notificaciones:</h6>
             <div class="dropdown-divider"></div>
             @foreach (auth()->user()->notifications as $notificacion)
-                <a class="dropdown-item" href="#">
-                  <span class="text-success">
+          <a class="dropdown-item" href="{{$notificacion['data']['url']}}">
+                <span class="{{$notificacion['data']['color']}}">
                     <strong>
-                      <i class="fa fa-long-arrow-up fa-fw"></i>{{$notificacion['data']['nombre']}}</strong>
+                    <i class="{{$notificacion['data']['icon']}}"></i> {{$notificacion['data']['nombre']}}</strong>
                   </span>
                   <span class="small float-right text-muted">{{$notificacion->created_at}}</span>
-                  
+                <div class="dropdown-message small">{{$notificacion['data']['mensaje']}}</div>
                 </a>
             @endforeach
-            <a class="dropdown-item" href="#">
+            <!--a class="dropdown-item" href="#">
               <span class="text-success">
                 <strong>
                   <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
@@ -219,9 +221,9 @@
               </span>
               <span class="small float-right text-muted">11:21 AM</span>
               <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
+            </a-->
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all alerts</a>
+            <a class="dropdown-item small" href="{{ route('notificaciones.index') }}">Ver todas las notificaciones</a>
           </div>
         </li>
         <li class="nav-item">
@@ -287,7 +289,7 @@
             //data: $('#counter').text(),
             url: "/notify",
             success: function(data) {
-                $('#notificacion').text(data);
+                $('#notificacion').text(data.length);
             }
         });                                      
         }

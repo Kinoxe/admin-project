@@ -15,16 +15,17 @@ class DatabaseSeeder extends Seeder
         'Roles',
         'Permissions',    	
         'Users',
-
+        'Departamentos',
         //tablas de pruebas
         'Contacto_Clientes',
         'Clientes',
+
               
     ]);
         //seeder predeterminados
         $this->call(PermisosSeeder::class);
         $this->call(UserSeeder::class);
-
+        $this->call(DepartamentosSeeder::class);
         //seeder para pruebas
         $this->call(ClientesTableSeeder::class);
         $this->call(ContactoClienteSeeder::class);
