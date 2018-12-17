@@ -173,21 +173,22 @@
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
             
-            @if(count(auth()->user()->notifications) > 0)
+            @if(count(auth()->user()->unreadnotifications) > 0)
                <span class="d-lg-none">Alerts
                  <span class="badge badge-pill badge-warning"></span>
                   </span>
                 <span class="indicator text-warning d-none d-lg-block" id="notificacion">
                 {{--count(auth()->user()->notifications)--}}
-                {{count(auth()->user()->notifications)}}
+                {{count(auth()->user()->unreadnotifications)}}
                 </span>
             @endif
           </a>
-          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+          <div class="dropdown-menu" style="width:400px;" aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">Nuevas notificaciones:</h6>
             <div class="dropdown-divider"></div>
-            @foreach (auth()->user()->notifications as $notificacion)
-          <a class="dropdown-item" href="{{$notificacion['data']['url']}}">
+            @csrf
+            @foreach (auth()->user()->unreadnotifications as $notificacion)
+          <a class="dropdown-item" href="{{$notificacion['data']['url']}}" data-notif-id="{{$notificacion->id}}">
                 <span class="{{$notificacion['data']['color']}}">
                     <strong>
                     <i class="{{$notificacion['data']['icon']}}"></i> {{$notificacion['data']['nombre']}}</strong>
@@ -224,6 +225,7 @@
             </a-->
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="{{ route('notificaciones.index') }}">Ver todas las notificaciones</a>
+            <meta name="csrf_token" content="{{ csrf_token() }}" />
           </div>
         </li>
         <li class="nav-item">
@@ -273,7 +275,44 @@
   @guest
   @else
   <script type="text/javascript">
+    
+
+    $('a[data-notif-id]').click(function () {
+      
+      var notif_id   = $(this).data('notifId');
+      var targetHref = $(this).data('href');
+      
+     
+     // var csrf_token = $('meta[name="csrf-token"]').attr('content');
+      
+      $.ajax({
+    type: 'PUT',
+    url: '/notificaciones/'+notif_id,
+    dataType: 'json',
+    beforeSend: function (xhr) {
+            var token = $('meta[name="csrf_token"]').attr('content');
+
+            if (token) {
+                  return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+            }
+        },
+    data: {
+      //  _token: csrf_token,
+        
+        id: notif_id,
+        
+    },
+    success: function(data) {
+      
+      data.success ? (window.location.href = data.url) : false;
+    }
+    });
+      
+
+      return false;
+    });
     $(document).ready(function() {	
+      
         function update(){
           //var actual = Number($('#notificacion').text())+1; 
           //$('#notificacion').text(actual); 

@@ -12,11 +12,10 @@ use Illuminate\Support\Facades\DB;
 class DepartamentosController extends Controller
 {      function __construct(Request $request)
     {   $this->middleware('auth');
-        /*
-        $this->middleware(['permission:Departamento show']);
-        $this->middleware('permission:Departamento create', ['only' => ['create','store']]);
-        $this->middleware('permission:Departamento edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:Departamento delete', ['only' => ['destroy']]);*/
+        $this->middleware(['permission:show departamento']);
+        $this->middleware('permission:create departamento', ['only' => ['create','store']]);
+        $this->middleware('permission:edit departamento', ['only' => ['edit','update']]);
+        $this->middleware('permission:delete departamento', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -41,8 +40,8 @@ class DepartamentosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   $users = User::select('id','name')->get();
+        return view('admin.departamentos.create', compact('users'));
     }
 
     /**
@@ -52,23 +51,32 @@ class DepartamentosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $encargado = User::where('name','=',$request->encargado)->get();
+    {   
+        $encargado = User::where('id','=',$request->encargado)->get();
+        //dd($encargado);
         if(!$encargado){
-            return Response::json(['error'=>[
-                'message'=> "No se ha encontrado el Usuario Encargado."]], 404);
+            return redirect('/departamentos/create')->with('error', 'No se encontro el encargado.')->withInput();  
         }
       
-        $message = $encargado;
+        
         $Departamento = Departamento::create([
             'nombre' => trim($request->nombre),
             'abreviatura' => trim($request->abreviatura),
-            'encargado' => $encargado[0]->id,
+            
+            'encargado' => trim($request->encargado),
            
         ]);
-        $message =  "El Departamentoo ha sido creado correctamente";
-        $response = Response::json(['data'=> $message], 201);
-        return $response;
+        $users = User::all();
+          foreach($users as $user){
+            
+              if($user->hasPermissionTo('show departamento') && $user->id != auth()->user()->id){
+                  
+                  $user->notify(new \App\Notifications\CreacionDepartamento($Departamento));
+                  
+              }
+          }
+        return redirect('/departamentos')->with('success', 'El departamento fue agregado correctamente.');
+        
     }
 
     /**
@@ -118,7 +126,7 @@ class DepartamentosController extends Controller
     {   
         $Departamento = Departamento::find($id);
         if(!$Departamento){
-            return redirect('/departamentos')->with('error', 'El departamento no existe.');
+            return redirect('/departamentos')->with('error', 'El departamento no existe.')->withInput();
         }
 
         $Departamento->nombre = trim($request->nombre);
@@ -129,6 +137,15 @@ class DepartamentosController extends Controller
         $Departamento->save();
         $message =  "El Rol ha sido editado correctamente";
         $response = Response::json(['data'=> $message], 201);
+        $users = User::all();
+          foreach($users as $user){
+            
+              if($user->hasPermissionTo('show departamento') && $user->id != auth()->user()->id){
+                  
+                  $user->notify(new \App\Notifications\DepartamentoEdicion($Departamento));
+                  
+              }
+          }
         return redirect('/departamentos')->with('success', 'El departamento fue editado correctamente.');
     }
 
@@ -142,17 +159,21 @@ class DepartamentosController extends Controller
     {
         $Departamento = Departamento::find($id);
         if(!$Departamento){
-           return Response::json(['error'=>[
-               'error' => "No se ha encontrado el Departamentoo."
-           ]],404);
+           
+            return redirect('/departamentos')->with('error', 'No se encontro el departamento.'); 
        }
        
 
        $Departamento->delete();
-       
-       $message = "El Departamentoo se elimino correctamente.";
-       $response = Response::json([
-           'message' => $message]);
-       return $response;
+       $users = User::all();
+          foreach($users as $user){
+            
+              if($user->hasPermissionTo('show departamento') && $user->id != auth()->user()->id){
+                  
+                  $user->notify(new \App\Notifications\DepartamentoEliminacion($Departamento));
+                  
+              }
+          }
+       return redirect('/departamentos')->with('success', 'El departamento ha sido eliminado.'); 
     }
 }

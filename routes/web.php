@@ -18,8 +18,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/notify', function () {
-    return Auth::user()->notifications;
+    return Auth::user()->unreadNotifications;
 })->name('notify');
+
+Route::put('/notify/{id}', function ($id) {  
+    
+    $not =  Auth::user()->unreadNotifications;
+    $j=-1;
+    for ($i=0; $i < count($not) && $j == -1; $i++) { 
+       if($not[$i]->id == $id){
+           $j=$i;
+       }
+    }
+    if($j == -1){
+        return redirect()->back()->with('error', 'no se encontro notificacion.');
+    }
+    $not[$j]->markAsRead();
+    return redirect()->back()->with('success', 'notificacion leida.');
+    
+})->name('notify.read');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

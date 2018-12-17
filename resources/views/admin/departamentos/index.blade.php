@@ -25,7 +25,13 @@
       
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     {!! Form::close() !!}
-    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
+      @can('create departamento') 
+      <a href="{{ route('departamentos.create')}}" class="btn btn-success">Crear Departamento</a>
+      @else
+      <a href="{{ route('departamentos.create')}}" class="btn btn-success disabled" aria-disabled="true" >Crear Departamento</a>
+      @endcan
+    </div>
   
   </nav>
   

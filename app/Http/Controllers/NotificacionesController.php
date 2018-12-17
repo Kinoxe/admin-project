@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class NotificacionesController extends Controller
 {
@@ -67,8 +68,25 @@ class NotificacionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   $not =  auth()->user()->unreadNotifications;
+        
+        
+        $j=-1;
+        for ($i=0; $i < count($not) && $j == -1; $i++) { 
+           if($not[$i]->id == $id){
+               $j=$i;
+           }
+           
+        }
+        if($j == -1){
+            return Response::json(['data'=> 'error'.$id], 201);
+        }
+        $not[$j]->markAsRead();
+        
+       
+        
+        return Response::json(['success'=> true, 'url'=> $not[$j]->data['url']], 200);
+        //return redirect()->back()->with('success', 'notificacion leida.');
     }
 
     /**
